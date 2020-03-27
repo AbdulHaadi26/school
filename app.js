@@ -16,15 +16,15 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/public', express.static('public'));
-app.use('/build',express.static('build'))
+app.use(express.static(('build')));
 
 //Routes
 require('./routes')(app);
 
 //Send an HTML page to confirm that the website is working
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     res.sendFile(__dirname + '/build/index.html');
-});
+});;
 
 //Send an HTML page to confirm that the website is working
 app.get('*', (req, res) => {
