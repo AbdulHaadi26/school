@@ -23,12 +23,12 @@ require('./routes')(app);
 
 //Send an HTML page to confirm that the website is working
 app.get('/', async (req, res) => {
-    res.sendFile(path.join(__dirname, '/build/index.html'));;
+    res.sendFile(path.join(__dirname, 'build/index.html'));;
 });;
 
 //Send an HTML page to confirm that the website is working
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/build/index.html'));
+    res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
 //Connect to Mongodb
