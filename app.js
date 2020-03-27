@@ -28,7 +28,7 @@ app.get('/', async (req, res) => {
 
 //Send an HTML page to confirm that the website is working
 app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html');
+    res.sendFile(__dirname + '/build/index.html');
 });
 
 //Connect to Mongodb
