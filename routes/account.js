@@ -18,12 +18,10 @@ router.post('/register', async (req, res) => {
 
 router.post('/auth', async (req, res) => {
     const { email, password } = req.body;
-    try { 
         var user = await User.findUserByCredentials(email, password);
         if (!user) return res.json({ error: 'User is not registered' });
         var token = await user.generateAuthToken();
         res.json({ token: token });
-    } catch { res.json({ error: 'Email or password is incorrect' }); }
 });
 
 router.get('/profile', JWT, async (req, res) => {
