@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/public', express.static('public'));
-app.use(express.static('build'))
+app.use('/build',express.static('build'))
 
 //Routes
 require('./routes')(app);
