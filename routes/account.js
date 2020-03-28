@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/auth', async (req, res) => {
     const { email, password } = req.body;
-    try { 
+    try {   
         var user = await User.findUserByCredentials(email, password);
         if (!user) return res.json({ error: 'User is not registered' });
         var token = await user.generateAuthToken();
