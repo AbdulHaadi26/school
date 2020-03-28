@@ -17,7 +17,7 @@ studSchema.statics.findUserById = async (_id) => {
 };
 
 studSchema.statics.findUserByName = async (name, roll) => {
-    const user = await Stud.countDocuments({
+    const user = await Stud.findOne({
         name: { '$regex': `${name}`, '$options': 'i' }
         , roll: { '$regex': `${roll}`, '$options': 'i' }
     }, { name: 1 });
