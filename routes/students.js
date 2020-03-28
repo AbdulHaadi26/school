@@ -6,7 +6,7 @@ const JWT = require('../middlewares/jwtAuth');
 
 router.post('/register', async (req, res) => {
     try {
-        const { name, email, section, cls } = req.body;
+        const { name, roll, section, cls } = req.body;
         const userData = { _id: new mongoose.mongo.ObjectId(), name: name, roll: roll, cls: Number(cls), section: section };
         var user = await Stud.findUserByName(name, roll);
         if (!user) {
