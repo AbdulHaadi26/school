@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const compression = require('compression');
 var path = require('path');
 
 //MongoDB Connection String
@@ -17,6 +18,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/public',express.static('public'));
 app.use(express.static('build'));
+app.use(compression({ filter: shouldCompress }));
+
+function shouldCompress(req, res) {
+    if (req.headers["x-no-compression"]) return false;
+    return compression.filter(req, res);
+}
 
 //Routes
 require('./routes')(app);
