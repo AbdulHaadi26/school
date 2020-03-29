@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Session = require('../schemas/sessionSchema');
-const Stud = require('../schemas/studentSchema');
+const Result = require('../schemas/resultSchema');
 const JWT = require('../middlewares/jwtAuth');
 
 router.post('/register', async (req, res) => {
     try {
-        const { name, roll, section, cls } = req.body;
+        const { name, roll, section, cls ,_id} = req.body;
         const userData = { _id: new mongoose.mongo.ObjectId(), name: name, roll: roll, cls: Number(cls), section: section };
-        var user = await Stud.findUserByName(name, roll);
+        var user = await Result.findResultByName(name, _id);
         if (!user) {
             var data = await Stud.create(userData);
             res.json({ student: data });
