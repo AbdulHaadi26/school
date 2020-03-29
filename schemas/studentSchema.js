@@ -31,7 +31,7 @@ studSchema.statics.getAllUserQueryLimit = async (offsetN, string, opt1, opt2) =>
     if (Number(opt1) === 10 && opt2 === 'All')
         var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' } }).sort({ _id: -1 }).skip(skipInNumber).limit(25);
     else if (Number(opt1) === 10 && opt2!=='All')
-        var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, cls: Number(opt) }).sort({ _id: -1 }).skip(skipInNumber).limit(25);
+        var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, cls: Number(opt1) }).sort({ _id: -1 }).skip(skipInNumber).limit(25);
     else if (opt2 === 'All' && Number(opt1)!==10)
         var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, section: opt2 }).sort({ _id: -1 }).skip(skipInNumber).limit(25);
     else
@@ -44,7 +44,7 @@ studSchema.statics.getAllUserQueryCount = async (string, opt1, opt2) => {
     if (Number(opt1) === 10 && opt2 === 'All')
         var user = await Stud.countDocuments({ passed: false, name: { '$regex': `${string}`, '$options': 'i' } });
     else if (Number(opt1) === 10 && opt2!=='All')
-        var user = await Stud.countDocuments({ passed: false,name: { '$regex': `${string}`, '$options': 'i' }, cls: Number(opt) });
+        var user = await Stud.countDocuments({ passed: false,name: { '$regex': `${string}`, '$options': 'i' }, cls: Number(opt1) });
     else if (opt2 === 'All' && Number(opt1 !== 10))
         var user = await Stud.countDocuments({ passed: false,name: { '$regex': `${string}`, '$options': 'i' }, section: opt2 });
     else
@@ -58,7 +58,7 @@ studSchema.statics.getAllUserCount = async (opt1, opt2) => {
     if (Number(opt1) === 10 && opt2 === 'All')
         var user = await Stud.countDocuments({ passed: false });
     else if (Number(opt1) === 10 && opt2 !== 'All')
-        var user = await Stud.countDocuments({ passed: false, cls: Number(opt) });
+        var user = await Stud.countDocuments({ passed: false, cls: Number(opt1) });
     else if (opt2 === 'All' && Number(opt1) !== 10)
         var user = await Stud.countDocuments({ passed: false, section: opt2 });
     else
@@ -73,7 +73,7 @@ studSchema.statics.getAllUserLimit = async (offsetN, opt1, opt2) => {
     if (Number(opt1) === 10 && opt2 === 'All')
         var user = await Stud.find({ passed: false }).sort({ _id: -1 }).skip(skipInNumber).limit(25);
     else if (Number(opt1) === 10 && opt2 !=='All') 
-        var user = await Stud.find({ passed: false, cls: Number(opt) }).sort({ _id: -1 }).skip(skipInNumber).limit(25);
+        var user = await Stud.find({ passed: false, cls: Number(opt1) }).sort({ _id: -1 }).skip(skipInNumber).limit(25);
     else if (opt2 === 'All' && Number(opt1) !==10)
         var user = await Stud.find({ passed: false, section: opt2 }).sort({ _id: -1 }).skip(skipInNumber).limit(25);
     else
