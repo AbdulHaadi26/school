@@ -23,5 +23,9 @@ sessionSchema.statics.getAllSession = async () => {
     return user;
 };
 
+sessionSchema.statics.getAllSessionById = async (_id) => {
+    var user = await Sess.find({}).sort({ _id: -1 }).limit(5);
+    return user;
+};
 module.exports = Sess = mongoose.model("sess", sessionSchema, "sess");
 
