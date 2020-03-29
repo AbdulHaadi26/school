@@ -23,8 +23,7 @@ studSchema.statics.findUserByName = async (name, roll) => {
     }, { name: 1 });
     return user;
 };
-
-UserSchema.statics.getAllUserQueryLimit = async (offsetN, string, opt1, opt2) => {
+studSchema.statics.getAllUserQueryLimit = async (offsetN, string, opt1, opt2) => {
     var skipInNumber = Number(offsetN);
     var skipInNumber = skipInNumber * 25;
     var user;
