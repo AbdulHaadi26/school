@@ -29,7 +29,7 @@ router.get('/getStudent/:_id', async (req, res) => {
 router.post('/searchStudCount', JWT, async (req, res) => {
     const { string, opt1, opt2 } = req.body;
     try {
-        var count = await User.getAllUserQueryCount(string, opt1, opt2);
+        var count = await Stud.getAllUserQueryCount(string, opt1, opt2);
         if (count) res.json({ studCount: count });
         else res.json({ studCount: 0 });
     } catch { res.json({ error: 'Could not find any student' }); }
@@ -38,7 +38,7 @@ router.post('/searchStudCount', JWT, async (req, res) => {
 router.post('/searchStud', JWT, async (req, res) => {
     const { limit, string, opt1, opt2 } = req.body;
     try {
-        var userList = await User.getAllUserQueryLimit(limit, string, opt1, opt2);
+        var userList = await Stud.getAllUserQueryLimit(limit, string, opt1, opt2);
         if (userList) res.json({ studList: userList });
         else res.json({ studList: [] });
     } catch { res.json({ error: 'Could not find any student' }); }
@@ -48,7 +48,7 @@ router.post('/searchStud', JWT, async (req, res) => {
 router.post('/getStudCountAll', JWT, async (req, res) => {
     const { opt1, opt2 } = req.body;
     try {
-        var count = await User.getAllUserCount(opt1, opt2);
+        var count = await Stud.getAllUserCount(opt1, opt2);
         if (count) res.json({ studCount: count });
         else res.json({ studCount: 0 });
     } catch { res.json({ error: 'Could not find any student' }); }
@@ -57,7 +57,7 @@ router.post('/getStudCountAll', JWT, async (req, res) => {
 router.post('/getStudAll', JWT, async (req, res) => {
     const { limit, opt1, opt2 } = req.body;
     try {
-        var userList = await User.getAllUserLimit(limit, opt1, opt2);
+        var userList = await Stud.getAllUserLimit(limit, opt1, opt2);
         if (userList) res.json({ studList: userList });
         else res.json({ studList: [] });
     } catch { res.json({ error: 'Could not find any student' }); }
