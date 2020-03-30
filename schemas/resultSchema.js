@@ -24,7 +24,7 @@ resultSchema.statics.findResultById = async (_id) => {
     return user;
 };
 
-resultSchema.statics.findResultByName = async (name, roll) => {
+resultSchema.statics.findResultByName = async (name, sessionId) => {
     const user = await Res.findOne({
         name: { '$regex': `${name}`, '$options': 'i' }
         , sessionId: sessionId
@@ -89,5 +89,5 @@ resultSchema.statics.getAllResultLimit = async (offsetN, opt1, opt2, id) => {
     return user;
 };
 
-module.exports = Res = mongoose.model("res", studSchema, "res");
+module.exports = Res = mongoose.model("res", resultSchema, "res");
 
