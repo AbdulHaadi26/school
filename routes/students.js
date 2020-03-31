@@ -9,7 +9,7 @@ router.post('/register', async (req, res) => {
     try {
         const { name, roll, section, cls } = req.body;
         const userData = { _id: new mongoose.mongo.ObjectId(), name: name, roll: roll, cls: Number(cls), section: section };
-        var user = await Stud.findUserByName(name, roll,cls,section);
+        var user = await Stud.findUserByName(name, roll, cls, section);
         if (!user) {
             var data = await Stud.create(userData);
             res.json({ student: data });
@@ -19,12 +19,9 @@ router.post('/register', async (req, res) => {
 
 router.post('/update', async (req, res) => {
     try {
-        const { _id,name, roll, section, cls } = req.body;
-        var user = await Stud.findUserByName(name, roll,cls,section);
-        if (!user) {
-            var data = await Stud.updateStudent(_id,name,roll,cls,section);
+        const { _id, name, roll, section, cls } = req.body;
+            var data = await Stud.updateStudent(_id, name, roll, cls, section);
             res.json({ student: true });
-        } else res.json({ error: 'User not updated' });
     } catch{ res.json({ error: 'Somthing unexpected occured' }); }
 });
 
