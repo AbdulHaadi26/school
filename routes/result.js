@@ -60,7 +60,7 @@ router.post('/getResultAll', async (req, res) => {
 });
 
 
-router.post('/getResult/:_id', async (req, res) => {
+router.get('/getResult/:_id', async (req, res) => {
     const { _id } = req.params;
     try {
         var p1 = Result.findResultById(_id);
