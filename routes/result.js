@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
     } catch{ res.json({ error: 'Somthing unexpeected occured' }); }
 });
 
-router.post('/searchResultCount', JWT, async (req, res) => {
+router.post('/searchResultCount', async (req, res) => {
     const { string, opt1, opt2 } = req.body;
     try {
         var count = await Result.getAllResultQueryCount(string, opt1, opt2);
@@ -28,7 +28,7 @@ router.post('/searchResultCount', JWT, async (req, res) => {
     } catch { res.json({ error: 'Could not find any result' }); }
 });
 
-router.post('/searchResult', JWT, async (req, res) => {
+router.post('/searchResult', async (req, res) => {
     const { limit, string, opt1, opt2 } = req.body;
     try {
         var userList = await Result.getAllResultQueryLimit(limit, string, opt1, opt2);
@@ -38,7 +38,7 @@ router.post('/searchResult', JWT, async (req, res) => {
 });
 
 
-router.post('/getResultCountAll', JWT, async (req, res) => {
+router.post('/getResultCountAll', async (req, res) => {
     const { opt1, opt2 } = req.body;
     try {
         var count = await Result.getAllResultCount(opt1, opt2);
@@ -47,7 +47,7 @@ router.post('/getResultCountAll', JWT, async (req, res) => {
     } catch { res.json({ error: 'Could not find any result' }); }
 });
 
-router.post('/getResultAll', JWT, async (req, res) => {
+router.post('/getResultAll', async (req, res) => {
     const { limit, opt1, opt2 } = req.body;
     try {
         var userList = await Stud.getAllResultLimit(limit, opt1, opt2);
