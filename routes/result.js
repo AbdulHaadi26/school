@@ -78,7 +78,7 @@ router.post('/update', async (req, res) => {
         } = req.body;
         var data = await Result.updateResult(_id, percentage, subjects, sessionId, sessionName, promoted);
         if (Number(cls) === 5 && promoted) var upt = await Stud.updatePassed(name, roll, cls, section);
-        res.json({ Result: data });
+        res.json({ result: true });
     } catch{ res.json({ error: 'Somthing unexpeected occured' }); }
 });
 
