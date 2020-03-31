@@ -16,11 +16,34 @@ studSchema.statics.findUserById = async (_id) => {
     return user;
 };
 
-studSchema.statics.findUserByName = async (name, roll,cls,section) => {
+studSchema.statics.findUserByName = async (name, roll, cls, section) => {
     const user = await Stud.findOne({
         name: { '$regex': `${name}`, '$options': 'i' }
-        , roll: roll, cls: Number(cls) , section:section
+        , roll: roll, cls: Number(cls), section: section
     }, { name: 1 });
+    return user;
+};
+
+studSchema.statics.updateStudent = async (_id, name, roll, cls, section) => {
+    const user = await Stud.collection.updateOne({ '_id': mongoose.Types.ObjectId(_id) },
+        {
+            $set: {
+                'name': name,
+                'roll': roll,
+                'cls': Number(cls),
+                'section': section
+            }
+        });
+    return user;
+};
+
+studSchema.statics.updatePassed = async (_name, roll, cls, section) => {
+    const user = await Stud.collection.updateOne({
+        name: name,
+        roll: roll,
+        cls: Number(cls),
+        section: section
+    }, { $set: { passed: true } });
     return user;
 };
 

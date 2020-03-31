@@ -17,6 +17,17 @@ router.post('/register', async (req, res) => {
     } catch{ res.json({ error: 'Somthing unexpected occured' }); }
 });
 
+router.post('/update', async (req, res) => {
+    try {
+        const { _id,name, roll, section, cls } = req.body;
+        var user = await Stud.findUserByName(name, roll,cls,section);
+        if (!user) {
+            var data = await Stud.cupdateStudent(_id,name,roll,cls,section);
+            res.json({ student: true });
+        } else res.json({ error: 'User not updated' });
+    } catch{ res.json({ error: 'Somthing unexpected occured' }); }
+});
+
 router.get('/getStudent/:_id', async (req, res) => {
     try {
         const { _id } = req.params;

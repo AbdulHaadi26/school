@@ -24,6 +24,20 @@ resultSchema.statics.findResultById = async (_id) => {
     return user;
 };
 
+resultSchema.statics.updateResult = async (_id, percentage,subjects,sessionId,sessionName,promoted) => {
+    const user = await Res.collection.updateOne({ '_id': mongoose.Types.ObjectId(_id) },
+        {
+            $set: {
+                percentage:percentage,
+                subjects:subjects,
+                sessionId:sessionId,
+                sessionName:sessionName,
+                promoted:promoted
+            }
+        });
+    return user;
+};
+
 resultSchema.statics.findResultByName = async (name, sessionId,roll,cls,section) => {
     const user = await Res.findOne({
         name: { '$regex': `${name}`, '$options': 'i' }, roll: roll, cls: Number(cls), section: section
