@@ -10,7 +10,7 @@ const resultSchema = new Schema({
     section: { type: String, default: 'A' },
     promoted: { type: Boolean, default: false },
     sessionId: { type: String, default: '' },
-    sessionName: {type:String,default:''},
+    sessionName: { type: String, default: '' },
     subjects: [{
         name: { type: String, default: '' },
         marks: { type: Number, default: 0 },
@@ -24,9 +24,9 @@ resultSchema.statics.findResultById = async (_id) => {
     return user;
 };
 
-resultSchema.statics.findResultByName = async (name, sessionId) => {
+resultSchema.statics.findResultByName = async (name, sessionId,roll,cls,section) => {
     const user = await Res.findOne({
-        name: { '$regex': `${name}`, '$options': 'i' }
+        name: { '$regex': `${name}`, '$options': 'i' }, roll: roll, cls: Number(cls), section: section
         , sessionId: sessionId
     }, { name: 1 });
     return user;

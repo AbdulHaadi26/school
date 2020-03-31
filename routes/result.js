@@ -11,12 +11,50 @@ router.post('/register', async (req, res) => {
             _id: new mongoose.mongo.ObjectId(), name: name, roll: roll, cls: Number(cls), section: section
             , percentage: Number(percentage), sessionId: sessionId, sessionName: sessionName, subjects: subjects, promoted: promoted
         };
-        var user = await Result.findResultByName(name, sessionId);
+        var user = await Result.findResultByName(name, sessionId,roll,cls,section);
         if (!user) {
             var data = await Result.create(userData);
             res.json({ Result: data });
         } else res.json({ error: 'Result is already registered' });
     } catch{ res.json({ error: 'Somthing unexpeected occured' }); }
 });
+
+router.post('/searchResultCount', JWT, async (req, res) => {
+    const { string, opt1, opt2 } = req.body;
+    try {
+        var count = await Result.getAllResultQueryCount(string, opt1, opt2);
+        if (count) res.json({ resultCount: count });
+        else res.json({ resultCount: 0 });
+    } catch { res.json({ error: 'Could not find any result' }); }
+});
+
+router.post('/searchResult', JWT, async (req, res) => {
+    const { limit, string, opt1, opt2 } = req.body;
+    try {
+        var userList = await Result.getAllResultQueryLimit(limit, string, opt1, opt2);
+        if (userList) res.json({ resultList: userList });
+        else res.json({ resultList: [] });
+    } catch { res.json({ error: 'Could not find any result' }); }
+});
+
+
+router.post('/getResultCountAll', JWT, async (req, res) => {
+    const { opt1, opt2 } = req.body;
+    try {
+        var count = await Result.getAllResultCount(opt1, opt2);
+      if (count) res.json({ resultCount: count });
+        else res.json({ resultCount: 0 });
+    } catch { res.json({ error: 'Could not find any result' }); }
+});
+
+router.post('/getResultAll', JWT, async (req, res) => {
+    const { limit, opt1, opt2 } = req.body;
+    try {
+        var userList = await Stud.getAllResultLimit(limit, opt1, opt2);
+         if (userList) res.json({ resultList: userList });
+        else res.json({ resultList: [] });;
+    } catch { res.json({ error: 'Could not find any result' }); }
+});
+
 
 module.exports = router;
