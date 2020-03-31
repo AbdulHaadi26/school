@@ -9,7 +9,7 @@ router.post('/register', async (req, res) => {
     try {
         const { name, roll, section, cls } = req.body;
         const userData = { _id: new mongoose.mongo.ObjectId(), name: name, roll: roll, cls: Number(cls), section: section };
-        var user = await Stud.findUserByName(name, roll);
+        var user = await Stud.findUserByName(name, roll,cls,section);
         if (!user) {
             var data = await Stud.create(userData);
             res.json({ student: data });
