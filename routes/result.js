@@ -20,18 +20,18 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/searchResultCount', async (req, res) => {
-    const { string, opt1, opt2 } = req.body;
+    const { sesId,string, opt1, opt2 } = req.body;
     try {
-        var count = await Result.getAllResultQueryCount(string, opt1, opt2);
+        var count = await Result.getAllResultQueryCount(string, opt1, opt2,sesId);
         if (count) res.json({ resultCount: count });
         else res.json({ resultCount: 0 });
     } catch { res.json({ error: 'Could not find any result' }); }
 });
 
 router.post('/searchResult', async (req, res) => {
-    const { limit, string, opt1, opt2 } = req.body;
+    const { sesId,limit, string, opt1, opt2 } = req.body;
     try {
-        var userList = await Result.getAllResultQueryLimit(limit, string, opt1, opt2);
+        var userList = await Result.getAllResultQueryLimit(limit, string, opt1, opt2,sesId);
         if (userList) res.json({ resultList: userList });
         else res.json({ resultList: [] });
     } catch { res.json({ error: 'Could not find any result' }); }
@@ -39,18 +39,18 @@ router.post('/searchResult', async (req, res) => {
 
 
 router.post('/getResultCountAll', async (req, res) => {
-    const { opt1, opt2 } = req.body;
+    const { sesId,opt1, opt2 } = req.body;
     try {
-        var count = await Result.getAllResultCount(opt1, opt2);
+        var count = await Result.getAllResultCount(opt1, opt2, sesId);
       if (count) res.json({ resultCount: count });
         else res.json({ resultCount: 0 });
     } catch { res.json({ error: 'Could not find any result' }); }
 });
 
 router.post('/getResultAll', async (req, res) => {
-    const { limit, opt1, opt2 } = req.body;
+    const { sesId,limit, opt1, opt2 } = req.body;
     try {
-        var userList = await Stud.getAllResultLimit(limit, opt1, opt2);
+        var userList = await Stud.getAllResultLimit(limit, opt1, opt2, sesId);
          if (userList) res.json({ resultList: userList });
         else res.json({ resultList: [] });;
     } catch { res.json({ error: 'Could not find any result' }); }
