@@ -22,7 +22,7 @@ router.post('/update', async (req, res) => {
         const { _id,name, roll, section, cls } = req.body;
         var user = await Stud.findUserByName(name, roll,cls,section);
         if (!user) {
-            var data = await Stud.cupdateStudent(_id,name,roll,cls,section);
+            var data = await Stud.updateStudent(_id,name,roll,cls,section);
             res.json({ student: true });
         } else res.json({ error: 'User not updated' });
     } catch{ res.json({ error: 'Somthing unexpected occured' }); }

@@ -63,7 +63,7 @@ router.post('/getResultAll', async (req, res) => {
 router.post('/getResult/:_id', async (req, res) => {
     const { _id } = req.params;
     try {
-        var p1 = Result.findResultById(_id); 
+        var p1 = Result.findResultById(_id);
         var p2 = Session.getAllSession();
         var [userList, session] = [await p1, await p2];
         if (!userList) return res.json({ error: 'Student is not registered' });
@@ -76,7 +76,7 @@ router.post('/update', async (req, res) => {
     try {
         const { _id, name, roll, section, cls, percentage, sessionId, sessionName, subjects, promoted
         } = req.body;
-        var data = await Result.update(_id, percentage, subjects, sessionId, sessionName, promoted);
+        var data = await Result.updateResult(_id, percentage, subjects, sessionId, sessionName, promoted);
         if (Number(cls) === 5 && promoted) var upt = await Stud.updatePassed(name, roll, cls, section);
         res.json({ Result: data });
     } catch{ res.json({ error: 'Somthing unexpeected occured' }); }
