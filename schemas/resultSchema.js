@@ -24,21 +24,21 @@ resultSchema.statics.findResultById = async (_id) => {
     return user;
 };
 
-resultSchema.statics.updateResult = async (_id, percentage,subjects,sessionId,sessionName,promoted) => {
+resultSchema.statics.updateResult = async (_id, percentage, subjects, sessionId, sessionName, promoted) => {
     const user = await Res.collection.updateOne({ '_id': mongoose.Types.ObjectId(_id) },
         {
             $set: {
-                percentage:percentage,
-                subjects:subjects,
-                sessionId:sessionId,
-                sessionName:sessionName,
-                promoted:promoted
+                percentage: percentage,
+                subjects: subjects,
+                sessionId: sessionId,
+                sessionName: sessionName,
+                promoted: promoted
             }
         });
     return user;
 };
 
-resultSchema.statics.findResultByName = async (name, sessionId,roll,cls,section) => {
+resultSchema.statics.findResultByName = async (name, sessionId, roll, cls, section) => {
     const user = await Res.findOne({
         name: { '$regex': `${name}`, '$options': 'i' }, roll: roll, cls: Number(cls), section: section
         , sessionId: sessionId
@@ -51,7 +51,7 @@ resultSchema.statics.getAllResultQueryLimit = async (offsetN, string, opt1, opt2
     var skipInNumber = skipInNumber * 25;
     var user;
     if (Number(opt1) === 10 && opt2 === 'All')
-        var user = await Res.find({ name: { '$regex': `${string}`, '$options': 'i' }, sessionId: id }).sort({ roll: 1 , cls:1}).skip(skipInNumber).limit(25);
+        var user = await Res.find({ name: { '$regex': `${string}`, '$options': 'i' }, sessionId: id }).sort({ cls: 1, roll: 1 }).skip(skipInNumber).limit(25);
     else if (Number(opt1) !== 10 && opt2 === 'All')
         var user = await Res.find({ name: { '$regex': `${string}`, '$options': 'i' }, sessionId: id, cls: Number(opt1) }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
     else if (opt2 !== 'All' && Number(opt1) === 10)
@@ -93,11 +93,11 @@ resultSchema.statics.getAllResultLimit = async (offsetN, opt1, opt2, id) => {
     var skipInNumber = skipInNumber * 25;
     var user;
     if (Number(opt1) === 10 && opt2 === 'All')
-        var user = await Res.find({ sessionId: id }).sort({ roll: 1 ,cls:1}).skip(skipInNumber).limit(25);
+        var user = await Res.find({ sessionId: id }).sort({  cls: 1 ,roll: 1}).skip(skipInNumber).limit(25);
     else if (Number(opt1) !== 10 && opt2 === 'All')
         var user = await Res.find({ sessionId: id, cls: Number(opt1) }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
     else if (opt2 !== 'All' && Number(opt1) === 10)
-        var user = await Res.find({ sessionId: id, section: opt2 }).sort({roll: 1 }).skip(skipInNumber).limit(25);
+        var user = await Res.find({ sessionId: id, section: opt2 }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
     else
         var user = await Res.find({ sessionId: id, cls: Number(opt1), section: opt2 }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
     return user;
