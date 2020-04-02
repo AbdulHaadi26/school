@@ -72,6 +72,15 @@ router.get('/getResult/:_id', async (req, res) => {
     } catch { res.json({ error: 'Could not find any result' }); }
 });
 
+router.get('/delResult/:_id', async (req, res) => {
+    try {
+        const { _id } = req.params;
+        var stud = await Result.deleteOne({_id:mongoose.Types.ObjectId(_id)});
+        res.json({ result: true });
+    } catch{ res.json({ error: 'Somthing unexpected occured' }); }
+
+});
+
 router.post('/update', async (req, res) => {
     try {
         const { _id, name, roll, section, cls, percentage, sessionId, sessionName, subjects, promoted

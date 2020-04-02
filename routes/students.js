@@ -45,14 +45,9 @@ router.get('/getStudent/:_id', async (req, res) => {
 router.get('/delStudent/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
-        var p1 = Stud.findUserById(_id);
-        var p2 = Session.getAllSession();
-        var [user, session] = [await p1, await p2];
-        if (!user) return res.json({ error: 'Student is not registered' });
-        if (!session) session = [];
-        res.json({ student: user, session: session });
+        var stud = await Stud.deleteOne({_id:mongoose.Types.ObjectId(_id)});
+        res.json({ student: true });
     } catch{ res.json({ error: 'Somthing unexpected occured' }); }
-
 });
 
 router.post('/searchStudCount', JWT, async (req, res) => {
