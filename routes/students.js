@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Session = require('../schemas/sessionSchema');
 const Stud = require('../schemas/studentSchema');
+const Res = require('../schemas//resultSchema');
 const JWT = require('../middlewares/jwtAuth');
 
 router.post('/register', async (req, res) => {
@@ -20,12 +21,28 @@ router.post('/register', async (req, res) => {
 router.post('/update', async (req, res) => {
     try {
         const { _id, name, roll, section, cls } = req.body;
-            var data = await Stud.updateStudent(_id, name, roll, cls, section);
-            res.json({ student: true });
+        var stud = await Stud.findUserById(_id);
+        var p1 = Res.updateResultStudent(stud.name, stud.roll, stud.cls, stud.section, name, roll, cls, section);
+        var p2 = Stud.updateStudent(_id, name, roll, cls, section);
+        var [result,stud] = [await p1, await p2];
+        res.json({ student: true });
     } catch{ res.json({ error: 'Somthing unexpected occured' }); }
 });
 
 router.get('/getStudent/:_id', async (req, res) => {
+    try {
+        const { _id } = req.params;
+        var p1 = Stud.findUserById(_id);
+        var p2 = Session.getAllSession();
+        var [user, session] = [await p1, await p2];
+        if (!user) return res.json({ error: 'Student is not registered' });
+        if (!session) session = [];
+        res.json({ student: user, session: session });
+    } catch{ res.json({ error: 'Somthing unexpected occured' }); }
+
+});
+
+router.get('/delStudent/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
         var p1 = Stud.findUserById(_id);

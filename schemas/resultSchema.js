@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const resultSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, default: '' },
-    roll: { type: String, default: '' },
+    roll: { type: Number, default: 0 },
     cls: { type: Number, default: 0 },
     section: { type: String, default: 'A' },
     promoted: { type: Boolean, default: false },
@@ -21,6 +21,20 @@ const resultSchema = new Schema({
 
 resultSchema.statics.findResultById = async (_id) => {
     const user = await Res.findOne({ '_id': mongoose.Types.ObjectId(_id) });
+    return user;
+};
+
+
+resultSchema.statics.updateResultStudent = async (name1, roll1, cls1, section1, name, roll, cls, section) => {
+    const user = await Res.collection.updateOne({ name: name1, roll, roll1, cls: Number(cls1), section: section1 },
+        {
+            $set: {
+                name: name,
+                cls: Number(cls),
+                roll: roll,
+                section: section
+            }
+        });
     return user;
 };
 
@@ -93,7 +107,7 @@ resultSchema.statics.getAllResultLimit = async (offsetN, opt1, opt2, id) => {
     var skipInNumber = skipInNumber * 25;
     var user;
     if (Number(opt1) === 10 && opt2 === 'All')
-        var user = await Res.find({ sessionId: id }).sort({  cls: 1 ,roll: 1}).skip(skipInNumber).limit(25);
+        var user = await Res.find({ sessionId: id }).sort({ cls: 1, roll: 1 }).skip(skipInNumber).limit(25);
     else if (Number(opt1) !== 10 && opt2 === 'All')
         var user = await Res.find({ sessionId: id, cls: Number(opt1) }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
     else if (opt2 !== 'All' && Number(opt1) === 10)

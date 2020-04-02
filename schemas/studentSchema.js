@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const studSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, default: '' },
-    roll: { type: String, default: '' },
+    roll: { type: Number, default: 0 },
     cls: { type: Number, default: 0 },
     section: { type: String, default: 'A' },
     passed: { type: Boolean, default: false }
@@ -19,7 +19,7 @@ studSchema.statics.findUserById = async (_id) => {
 studSchema.statics.findUserByName = async (name, roll, cls, section) => {
     const user = await Stud.findOne({
         name: { '$regex': `${name}`, '$options': 'i' }
-        , roll: roll, cls: Number(cls), section: section
+        , roll: Number(roll), cls: Number(cls), section: section
     }, { name: 1 });
     return user;
 };
@@ -29,7 +29,7 @@ studSchema.statics.updateStudent = async (_id, name, roll, cls, section) => {
         {
             $set: {
                 'name': name,
-                'roll': roll,
+                'roll': Number(roll),
                 'cls': Number(cls),
                 'section': section
             }
@@ -37,10 +37,10 @@ studSchema.statics.updateStudent = async (_id, name, roll, cls, section) => {
     return user;
 };
 
-studSchema.statics.updatePassed = async (_name, roll, cls, section) => {
+studSchema.statics.updatePassed = async (name, roll, cls, section) => {
     const user = await Stud.collection.updateOne({
         name: name,
-        roll: roll,
+        roll: Number(roll),
         cls: Number(cls),
         section: section
     }, { $set: { passed: true } });
@@ -104,5 +104,8 @@ studSchema.statics.getAllUserLimit = async (offsetN, opt1, opt2) => {
     return user;
 };
 
+studSchema.statics.delUser = async () => {
+    return null
+}
 module.exports = Stud = mongoose.model("studs", studSchema, "studs");
 

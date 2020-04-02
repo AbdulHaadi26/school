@@ -8,6 +8,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const compression = require('compression');
+const User = require('./schemas/studentSchema');
+const Result = require('./schemas/resultSchema');
 var path = require('path');
 
 //MongoDB Connection String
@@ -16,7 +18,7 @@ const mongoURI = `mongodb+srv://${process.env.NAME}:${process.env.PASS}@dev-02rq
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.use('/public',express.static('public'));
+app.use('/public', express.static('public'));
 app.use(express.static('build'));
 app.use(compression({ filter: shouldCompress }));
 
@@ -35,19 +37,29 @@ app.get('/', async (req, res) => {
 
 //Send an HTML page to confirm that the website is working
 app.get('*', (req, res) => {
-res.sendFile(__dirname + '/build/index.html');
+    res.sendFile(__dirname + '/build/index.html');
 });
 
 //Connect to Mongodb
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true}, function (err) {
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, function (err) {
     if (err)
         console.log(err)
     else
         console.log('Connected to MongoDB');
-});
+})
+    ;
 
 //Start the server on port
 app.listen(process.env.PORT, () => {
-    console.log('Server is listening on port '+process.env.Port);
+    var user = User.find({});
+    await Promise.all(user.map(async (user) => {
+        User.updateOne({ '_id': mongoose.Types.ObjectId(user._id) }, { $set: { cls: Number(user.cls), roll: Number(user.roll) } })
+    }));
+
+      var result = Result.find({});
+    await Promise.all(result.map(async (user) => {
+        Result.updateOne({ '_id': mongoose.Types.ObjectId(user._id) }, { $set: { cls: Number(user.cls), roll: Number(user.roll) } })
+    }));
+    console.log('Server is listening on port ' + process.env.Port);
 });
 
