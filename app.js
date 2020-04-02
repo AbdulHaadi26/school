@@ -51,11 +51,16 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
 
 //Start the server on port
 app.listen(process.env.PORT, async () => {
+    var user = await User.find({});
+    await Promise.all(user.map(async (user) => {
+        await User.updateOne({ '_id': mongoose.Types.ObjectId(user._id) }, { $set: { cls: Number(user.cls), roll: parseInt(user.roll) } })
+    }));
+
     var result = await Result.find({});
     await Promise.all(result.map(async (result) => {
-        Result.updateOne(
+        await Result.updateOne(
             { '_id': mongoose.Types.ObjectId(result._id) },
-            { $set: { cls: Number(result.cls), roll: parseInt(result.roll) } });
+            { $set: { roll: parseInt(result.roll) } });
     }));
     console.log('Server is listening on port ' + process.env.Port);
 });
