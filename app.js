@@ -51,13 +51,13 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }, 
 
 //Start the server on port
 app.listen(process.env.PORT, async () => {
-    var user = User.find({});
+    var user = User.collection.find({});
     console.log(user)
     await Promise.all(user.map(async (user) => {
         User.updateOne({ '_id': mongoose.Types.ObjectId(user._id) }, { $set: { cls: Number(user.cls), roll: Number(user.roll) } })
     }));
 
-    var result = Result.find({});
+    var result = Result.collection.find({});
     console.log(result)
     await Promise.all(result.map(async (result) => {
         Result.updateOne(
