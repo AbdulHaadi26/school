@@ -22,6 +22,24 @@ router.post('/register', async (req, res) => {
     } catch{ res.json({ error: 'Somthing unexpeected occured' }); }
 });
 
+router.post('/searchParentCount', async (req, res) => {
+    const { sesId, string, opt1, opt2 } = req.body;
+    try {
+        var count = await Result.getAllParentQueryCount(string, opt1, opt2, sesId);
+        if (count) res.json({ resultCount: count });
+        else res.json({ resultCount: 0 });
+    } catch { res.json({ error: 'Could not find any result' }); }
+});
+
+router.post('/searchParent', async (req, res) => {
+    const { sesId, limit, string, opt1, opt2 } = req.body;
+    try {
+        var userList = await Result.getAllParentQueryLimit(limit, string, opt1, opt2, sesId);
+        if (userList) res.json({ resultList: userList });
+        else res.json({ resultList: [] });
+    } catch { res.json({ error: 'Could not find any result' }); }
+});
+
 router.post('/searchResultCount', async (req, res) => {
     const { sesId, string, opt1, opt2 } = req.body;
     try {
@@ -75,7 +93,7 @@ router.get('/getResult/:_id', async (req, res) => {
 router.get('/delResult/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
-        var stud = await Result.deleteOne({_id:mongoose.Types.ObjectId(_id)});
+        var stud = await Result.deleteOne({ _id: mongoose.Types.ObjectId(_id) });
         res.json({ result: true });
     } catch{ res.json({ error: 'Somthing unexpected occured' }); }
 
