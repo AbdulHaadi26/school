@@ -63,12 +63,12 @@ resultSchema.statics.findResultByName = async (name, sessionId, roll, cls, secti
 resultSchema.statics.getAllParentQueryLimit = async (offsetN, string, opt1, opt2, id) => {
     var skipInNumber = Number(offsetN);
     var skipInNumber = skipInNumber * 25;
-    var user = await Res.find({ name: { '$regex': `${string}`, '$options': 'i' }, sessionId: id, cls: Number(opt1), section: opt2 }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
+    var user = await Res.find({ name: { '$regex': `^${string}$`, '$options': 'i' }, sessionId: id, cls: Number(opt1), section: opt2 }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
     return user;
 };
 
 resultSchema.statics.getAllParentQueryCount = async (string, opt1, opt2, id) => {
-    var user = await Res.countDocuments({ name: { '$regex': `${string}`, '$options': 'i' }, sessionId: id, cls: Number(opt1), section: opt2 });
+    var user = await Res.countDocuments({ name: { '$regex': `^${string}$`, '$options': 'i' }, sessionId: id, cls: Number(opt1), section: opt2 });
     return user;
 };
 
