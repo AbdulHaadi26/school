@@ -54,11 +54,11 @@ studSchema.statics.getAllUserQueryLimit = async (offsetN, string, opt1, opt2) =>
     if (Number(opt1) === 10 && opt2 === 'All')
         var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' } }).sort({ cls:1, roll:1}).skip(skipInNumber).limit(25);
     else if (Number(opt1) !== 10 && opt2 === 'All')
-        var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, cls: Number(opt1) }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
+        var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, cls: Number(opt1) }).sort({ cls:1, roll:1 }).skip(skipInNumber).limit(25);
     else if (opt2 !== 'All' && Number(opt1) === 10)
-        var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, section: opt2 }).sort({roll: 1 }).skip(skipInNumber).limit(25);
+        var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, section: opt2 }).sort({cls:1, roll:1 }).skip(skipInNumber).limit(25);
     else
-        var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, cls: Number(opt1), section: opt2 }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
+        var user = await Stud.find({ passed: false, name: { '$regex': `${string}`, '$options': 'i' }, cls: Number(opt1), section: opt2 }).sort({ cls:1, roll:1 }).skip(skipInNumber).limit(25);
     return user;
 };
 
@@ -96,11 +96,11 @@ studSchema.statics.getAllUserLimit = async (offsetN, opt1, opt2) => {
     if (Number(opt1) === 10 && opt2 === 'All')
         var user = await Stud.find({ passed: false }).sort({ cls:1, roll:1 }).skip(skipInNumber).limit(25);
     else if (Number(opt1) !== 10 && opt2 === 'All')
-        var user = await Stud.find({ passed: false, cls: Number(opt1) }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
+        var user = await Stud.find({ passed: false, cls: Number(opt1) }).sort({ cls:1, roll:1 }).skip(skipInNumber).limit(25);
     else if (opt2 !== 'All' && Number(opt1) === 10)
-        var user = await Stud.find({ passed: false, section: opt2 }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
+        var user = await Stud.find({ passed: false, section: opt2 }).sort({ cls:1, roll:1 }).skip(skipInNumber).limit(25);
     else
-        var user = await Stud.find({ passed: false, cls: Number(opt1), section: opt2 }).sort({ roll: 1 }).skip(skipInNumber).limit(25);
+        var user = await Stud.find({ passed: false, cls: Number(opt1), section: opt2 }).sort({ cls:1, roll:1 }).skip(skipInNumber).limit(25);
     return user;
 };
 
